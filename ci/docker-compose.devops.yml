@@ -1,0 +1,40 @@
+version: "3"
+
+x-config:
+  build_context: &default-build_context ci
+  build_args_image: &default-build_args_image
+    ENV_BASIC_IMAGE: alpine
+    ENV_BASIC_IMAGE_TAG: 3.19
+  working_dir: &default-working_dir /root/workbench
+  volumes: &default-volume
+    - .:/root/workbench
+  extra_hosts: &default-extra_hosts
+    - 'host.docker.internal:host-gateway'
+
+services:
+  devops:
+    hostname: devops
+    build:
+      context: *default-build_context
+      dockerfile: pod/build/release/Dockerfile
+      args: *default-build_args_image
+    working_dir: *default-working_dir
+    command:
+      - |
+        echo "DevOPS"
+    volumes: *default-volume
+    extra_hosts: *default-extra_hosts
+
+  release:
+    hostname: release
+    build:
+      context: *default-build_context
+      dockerfile: pod/build/release/Dockerfile
+      args: *default-build_args_image
+    working_dir: *default-working_dir
+    command:
+      - |
+        make release_clean
+        make release
+    volumes: *default-volume
+    extra_hosts: *default-extra_hosts
