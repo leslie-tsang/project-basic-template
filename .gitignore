@@ -1,0 +1,9 @@
+# IDE ignore
+.idea
+.vscode
+
+# ignore ci utils workspace
+/ci/utils/workbench
+
+# ignore release folder
+/release
