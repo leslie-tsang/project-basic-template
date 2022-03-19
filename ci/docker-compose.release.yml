@@ -1,0 +1,23 @@
+version: "3"
+
+x-config:
+  build_context: &default-build_context ci
+  build_args_centos: &default-build_args_centos
+    ENV_BASIC_IMAGE: centos
+    ENV_BASIC_IAMGE_TAG: 7
+  working_dir: &default-working_dir /root/workbench
+  volumes: &default-volume
+    - .:/root/workbench
+
+services:
+  release:
+    build:
+      context: *default-build_context
+      dockerfile: pod/build/release/Dockerfile
+      args: *default-build_args_centos
+    working_dir: *default-working_dir
+    entrypoint: [ "/bin/bash", "-c" ]
+    command:
+      - |
+        echo "release"
+    volumes: *default-volume

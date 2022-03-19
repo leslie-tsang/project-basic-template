@@ -1,0 +1,10 @@
+# Dockerfile - eclint
+
+ARG ENV_BASIC_IMAGE
+ARG ENV_BASIC_IAMGE_TAG
+
+FROM ${ENV_BASIC_IMAGE}:${ENV_BASIC_IAMGE_TAG}
+
+WORKDIR /root
+
+RUN npm install -g eclint

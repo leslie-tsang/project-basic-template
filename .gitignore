@@ -1,0 +1,5 @@
+# IDE ignore
+.idea
+
+# ignore release folder
+/release

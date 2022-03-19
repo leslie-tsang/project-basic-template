@@ -1,0 +1,20 @@
+version: "3"
+
+x-config:
+  build_context: &default-build_context ci
+  build_args_nodejs: &default-build_args_nodejs
+    ENV_BASIC_IMAGE: node
+    ENV_BASIC_IAMGE_TAG: lts-alpine3.15
+  working_dir: &default-working_dir /root/workbench
+  volumes: &default-volume
+    - .:/root/workbench
+
+services:
+  eclint:
+    build:
+      context: *default-build_context
+      dockerfile: pod/lint/eclint/Dockerfile
+      args: *default-build_args_nodejs
+    working_dir: *default-working_dir
+    command: [ "eclint", "check" ]
+    volumes: *default-volume
