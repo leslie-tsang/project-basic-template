@@ -11,7 +11,7 @@ ENV_MAKEFILE := $(ENV_MAKEFILE) ci/Makefile
 
 # Hyperconverged Infrastructure patch for dev
 ENV_DOCKER_COMPOSE_LINT     ?= $(ENV_DOCKER_COMPOSE) -f $(CURDIR)/ci/docker-compose.lint.yml
-ENV_DOCKER_COMPOSE_RELEASE  ?= $(ENV_DOCKER_COMPOSE) -f $(CURDIR)/ci/docker-compose.release.yml
+ENV_DOCKER_COMPOSE_DEVOPS   ?= $(ENV_DOCKER_COMPOSE) -f $(CURDIR)/ci/docker-compose.devops.yml
 ENV_GIT                     ?= git
 ENV_GIT_COMMIT_ID           ?= $(shell $(ENV_GIT) log -1 --pretty="%H")
 ENV_SHASUM                  ?= shasum -a 512
@@ -70,7 +70,7 @@ publish: release-clean publish-release publish-clean release
 .PHONY: publish-release
 publish-release:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	@$(ENV_DOCKER_COMPOSE_RELEASE) run release
+	@$(ENV_DOCKER_COMPOSE_DEVOPS) run release
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -78,7 +78,7 @@ publish-release:
 .PHONY: publish-clean
 publish-clean:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	@$(ENV_DOCKER_COMPOSE_RELEASE) down
+	@$(ENV_DOCKER_COMPOSE_DEVOPS) down
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 

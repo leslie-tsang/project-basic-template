@@ -10,7 +10,7 @@ x-config:
     - .:/root/workbench
 
 services:
-  release:
+  devops:
     build:
       context: *default-build_context
       dockerfile: pod/build/release/Dockerfile
@@ -20,4 +20,16 @@ services:
     command:
       - |
         echo "DevOPS"
+    volumes: *default-volume
+
+  release:
+    build:
+      context: *default-build_context
+      dockerfile: pod/build/release/Dockerfile
+      args: *default-build_args_centos
+    working_dir: *default-working_dir
+    entrypoint: [ "/bin/bash", "-c" ]
+    command:
+      - |
+        echo "Release"
     volumes: *default-volume
