@@ -15,13 +15,14 @@ project_launch_utc      ?= $(shell date +%Y%m%d%H%M%S)
 
 # Hyper-converged Infrastructure
 ENV_OS_NAME          ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')
+ENV_COMMAND_V        ?= command -v
 ENV_DOCKER_COMPOSE   ?= docker-compose -p $(project_name) --project-directory $(CURDIR)
-ENV_MAKE             ?= $(shell which make)
+ENV_MAKE             ?= $(shell $(ENV_COMMAND_V) make)
 ENV_MAKEFILE         ?= Makefile
 ENV_HELP_PREFIX_SIZE ?= 20
 
 # AWK patch for mawk
-ifneq ($(shell command -v gawk),)
+ifneq ($(shell $(ENV_COMMAND_V) gawk),)
 	ENV_HELP_AWK_RULE ?= '{ if(match($$0, /^\s*\#{3}\s*([^:]+)\s*:\s*(.*)$$/, res)){ printf("    make %-$(ENV_HELP_PREFIX_SIZE)s : %-10s\n", res[1], res[2]) } }'
 else
 	ENV_HELP_AWK_RULE := '{ if(match($$0, /^\#\#\#([^:]+):(.*)$$/)){ split($$0, res, ":"); gsub(/^\#\#\#[ ]*/, "", res[1]); _desc=$$0; gsub(/^\#\#\#([^:]+):[ \t]*/, "", _desc); printf("    make %-$(ENV_HELP_PREFIX_SIZE)s : %-10s\n", res[1], _desc) } }'
