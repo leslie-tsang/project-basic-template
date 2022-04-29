@@ -15,6 +15,7 @@ project_launch_utc      ?= $(shell date +%Y%m%d%H%M%S)
 
 # Hyper-converged Infrastructure
 ENV_OS_NAME          ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')
+ENV_OS_ARCH          ?= $(shell uname -m | tr '[:upper:]' '[:lower:]')
 ENV_COMMAND_V        ?= command -v
 ENV_DOCKER_COMPOSE   ?= docker-compose -p $(project_name) --project-directory $(CURDIR)
 ENV_MAKE             ?= $(shell $(ENV_COMMAND_V) make)
