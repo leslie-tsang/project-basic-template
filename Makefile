@@ -1,7 +1,8 @@
 # Makefile basic env setting
 .DEFAULT_GOAL := help
 ## add pipefail support for default shell
-SHELL := /bin/bash -o pipefail
+SHELL_ARGS ?=
+SHELL      := /bin/bash -o pipefail $(SHELL_ARGS)
 
 
 # Project basic setting
