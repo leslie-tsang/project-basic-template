@@ -1,7 +1,9 @@
 # Makefile basic env setting
 .DEFAULT_GOAL := help
-## add pipefail support for default shell
+
+## SHELL_ARGS used for extra shell flag
 SHELL_ARGS ?=
+## add pipefail support for default shell
 SHELL      := /bin/bash -o pipefail $(SHELL_ARGS)
 
 
